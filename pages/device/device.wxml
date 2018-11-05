@@ -1,0 +1,27 @@
+<wxs module="utils">
+  module.exports.max = function(n1, n2) {
+    return Math.max(n1, n2)
+  }
+  module.exports.len = function(arr) {
+    arr = arr || []
+    return arr.length
+  }
+</wxs>
+<button class='button-scan' bindtap="openBluetoothAdapter">开始扫描</button>
+<button class='button-scan' bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
+<button class='button-scan' bindtap="closeBluetoothAdapter">结束流程</button>
+
+<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view>
+  <view wx:for="{{devices}}" wx:key="index" class="device_item">
+    <button class='button-scan' style='width:30%;font-size:12px;' bindtap='createBLEConnection' data-name="{{item.name || item.localName}}" data-device-id="{{item.deviceId}}">建立连接</button>
+    <button class='button-scan' style='width:30%;font-size:12px;' bindtap='closeBLEConnection' data-device-id="{{item.deviceId}}">断开连接</button>
+    <button bindtap='goService'  class='button-scan' style='width:30%;font-size:12px;'>详情</button>
+    <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+    <view style="font-size: 12px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+    <view style="font-size: 12px">deviceId: {{item.deviceId}}</view>
+    <view style="font-size: 12px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+    <block wx:for="{{serviceIds}}" wx:for-item="service">
+      <button bindtap='getServiceChsId' data-device-id="{{item.deviceId}}" data-service-id="{{service.uuid}}" style="font-size: 12px;line-height:30px;">serviceId:{{service.uuid}}</button>
+    </block>
+  </view>
+

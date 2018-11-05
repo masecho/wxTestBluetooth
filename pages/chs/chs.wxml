@@ -1,0 +1,87 @@
+<view>
+  <view class='item-s'>deviceId:{{selectDeviceId}}</view>
+  <view class='item-s' style='marin-bottom:10px;'>serviceId:{{selectServiceId}}</view>
+
+  <block wx:for="{{characters}}" wx:for-item="character" wx:for-index="chsindex" wx:key="{{character.uuid}}">
+    <view style='padding:10px;min-height:95vh'>
+      <button class='item'>
+        character:{{character.uuid}}
+      </button>
+      <view style='display:flex;'>
+        <button class='item'>read:{{character.properties.read?"是":"否"}}</button>
+        <button class='item'>write:{{character.properties.write?"是":"否"}}</button>
+        <button class='item'>notify:{{character.properties.notify?"是":"否"}}</button>
+        <button class='item'>indicate:{{character.properties.indicate?"是":"否"}}</button>
+      </view>
+      <view class='chs-content'>
+        <view class='chs-title'>
+          <view style='margin-left:10px;width:70px;'>接收数据</view>
+          <button size='mini' type='default' bindtap='clearRev' data-index="{{chsindex}}" data-uuid="{{character.uuid}}" style='line-height:30px;font-size:12px;'>清空数据</button>
+        </view>
+        <view style='height:100px;border:1px solid #ccc;padding-left:10px ;'>
+          <scroll-view style='height:100px' scroll-y scroll-with-animation>
+            <view style='display:flex;flex-wrap:wrap;align-items:flex-start'>
+              <view class='chs-value' wx:for="{{character.value}}" wx:for-item="chvalue">
+                {{chvalue}}
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+        <!-- <view class='chs-title'>
+          <view style='margin-left:10px;width:70px;'>发送数据</view>
+          <button size='mini' type='default' bindtap='clearSend' data-index="{{chsindex}}" data-uuid="{{character.uuid}}" style='line-height:30px;font-size:12px;'>清空数据</button>
+        </view>
+        <input bindinput="bindKeyInput" type='text' style='display:flex;flex-wrap:wrap;height:60px;border:1px solid #ccc;margin:5px 0;'>
+
+        </input> -->
+        <!-- <view style='display:flex;align-items:center;'>
+          <checkbox-group bindchange='checkHex'>
+            <checkbox value="{{checkedHex}}" checked='checked'>hex</checkbox>
+          </checkbox-group>
+          <button bindtap='sendChsValue' data-index="{{chsindex}}" data-uuid="{{character.uuid}}" style='line-height:30px;font-size:12px;'>发送</button>
+          <checkbox-group bindchange='checkCRC16'>
+            <checkbox value="{{checkedCRC16}}">crc16-modbus</checkbox>
+          </checkbox-group>
+        </view> -->
+        <view style='display:flex;align-items:center;flex-wrap:wrap'>
+          <button bindtap='validate' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">校验</button>
+          <button bindtap='queryLockState0' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询锁状态00</button>
+          <button bindtap='queryLockState1' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询锁状态01</button>
+          <button bindtap='queryLockState2' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询锁状态02</button>
+          <button bindtap='queryLockState3' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询锁状态03</button>
+          <button bindtap='queryAllLockState' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询所有锁的锁死状态</button>
+          <button bindtap='queryBatteryState' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询电池电量</button>
+          <button bindtap='cmdLockAll' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">锁死所有锁</button>
+          <button bindtap='cmdopenAll' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">打开所有锁</button>
+          <button bindtap='cmdOpenSingleLock0' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车00</button>
+          <button bindtap='cmdOpenSingleLock1' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车01</button>
+          <button bindtap='cmdOpenSingleLock2' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车02</button>
+           <button bindtap='cmdOpenSingleLock3' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车03</button>
+            <button bindtap='cmdOpenSingleLock4' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车04</button>
+             <button bindtap='cmdOpenSingleLock5' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车05</button>
+              <button bindtap='cmdOpenSingleLock6' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车06</button>
+               <button bindtap='cmdOpenSingleLock7' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">请求借车07</button>
+          <button bindtap='cmdReserveCart00' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约借车00</button>
+          <button bindtap='cmdReserveCart01' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约借车01</button>
+          <button bindtap='cmdReserveCart02' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约借车02</button>
+          <button bindtap='cmdCancelReserveCart' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">取消预约借车</button>
+          <button bindtap='cmdReserveBack00' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约还车00</button>   
+          <button bindtap='cmdReserveBack01' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约还车01</button>   
+          <button bindtap='cmdReserveBack02' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约还车02</button>     
+          <button bindtap='cmdReserveBack03' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">预约还车03</button>
+               <button bindtap='cmdCancelReserveBack02' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">取消预约还车02</button>
+          <button bindtap='cmdCancelReserveBack03' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">取消预约还车03</button>
+             <button bindtap='cmdHandleLockBack00' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">手动还车00</button>
+               <button bindtap='cmdHandleLockBack01' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">手动还车01</button>
+          <button bindtap='cmdHandleLockBack02' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">手动还车02</button>
+       
+          <button bindtap='GPSLocation' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">GPS定位</button>      
+          <button bindtap='queryModuleId' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询主锁Id</button> 
+          <button bindtap='queryModuleRunMode' data-index="{{chsindex}}" data-uuid="{{character.uuid}}">查询锁运行模式</button> 
+          
+        </view>
+
+      </view>
+    </view>
+  </block>
+</view>

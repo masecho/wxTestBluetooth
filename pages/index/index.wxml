@@ -1,0 +1,51 @@
+<wxs module="utils">
+  module.exports.max = function(n1, n2) {
+    return Math.max(n1, n2)
+  }
+  module.exports.len = function(arr) {
+    arr = arr || []
+    return arr.length
+  }
+</wxs>
+<button class='button-scan' bindtap="openBluetoothAdapter">开始扫描</button>
+<button class='button-scan' bindtap="stopBluetoothDevicesDiscovery">停止扫描</button>
+<button class='button-scan' bindtap="closeBluetoothAdapter">结束流程</button>
+
+<view class="devices_summary">已发现 {{devices.length}} 个外围设备：</view>
+<scroll-view class="device_list" scroll-y scroll-with-animation>
+  <view wx:for="{{devices}}" wx:key="index" class="device_item">
+    <button class='button-scan' style='width:40%;font-size:12px;' bindtap='createBLEConnection' data-name="{{item.name || item.localName}}" data-device-id="{{item.deviceId}}">建立连接</button>
+    <button class='button-scan' style='width:40%;font-size:12px;' bindtap='closeBLEConnection' data-device-id="{{item.deviceId}}">断开连接</button>
+    <view style="font-size: 16px; color: #333;">{{item.name}}</view>
+    <view style="font-size: 12px">信号强度: {{item.RSSI}}dBm ({{utils.max(0, item.RSSI + 100)}}%)</view>
+    <view style="font-size: 12px">deviceId: {{item.deviceId}}</view>
+    <view style="font-size: 12px">Service数量: {{utils.len(item.advertisServiceUUIDs)}}</view>
+    <block wx:for="{{serviceIds}}" wx:for-item="service">
+      <button bindtap='getServiceChsId' data-device-id="{{item.deviceId}}" data-service-id="{{service.uuid}}" style="font-size: 12px;line-height:30px;">serviceId:{{service.uuid}}</button>
+    </block>
+  </view>
+</scroll-view>
+<scroll-view class="chs_info" wx:if="{{connected}}" scroll-y scroll-with-animation>
+  <block wx:for="{{chsConnect}}" wx:for-item="chsItem" wx:key="chsItem.uuid">
+    <view>chs-uuid:{{chsItem.uuid}}</view>
+    <view style='display:flex;'>
+      <view>read:{{chsItem.properties.read?"是":"否"}}</view>
+      <view>write:{{chsItem.properties.write?"是":"否"}}</view>
+      <view>notify:{{chsItem.properties.notify?"是":"否"}}</view>
+      <view>indicate:{{chsItem.properties.indicate?"是":"否"}}</view>
+    </view>
+  </block>
+</scroll-view>
+<view class="connected_info" wx:if="{{connected}}">
+  <view>
+    <text>已连接到 {{name}}</text>
+    <view class="operation">
+      <button wx:if="{{canWrite}}" size="mini" bindtap="writeBLECharacteristicValue">写数据</button>
+      <button size="mini" bindtap="closeBLEConnection">断开连接</button>
+    </view>
+  </view>
+  <view wx:for="{{chs}}" wx:key="index" style="font-size: 12px; margin-top: 10px;">
+    <view>特性UUID: {{item.uuid}}</view>
+    <view>特性值: {{item.value}}</view>
+  </view>
+</view>

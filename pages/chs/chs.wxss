@@ -1,0 +1,12 @@
+/* pages/chs/chs.wxss */
+.chs-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.chs-value{
+  font-size: 14px; 
+  line-height: 16px;
+  height: 16px;
+  margin-right: 6px;
+}

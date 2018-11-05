@@ -1,0 +1,94 @@
+/**app.wxss**/
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+.item {
+  font-size: 12px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.item-s {
+  font-size: 12px;
+  line-height: 20px; 
+  text-align: center;
+}
+
+page {
+  color: #333;
+}
+
+.devices_summary {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.device_list {
+  height: 200px;
+  margin: 10px 5px;
+  margin-top: 0;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  width: auto;
+}
+
+.device_item {
+  border-bottom: 1px solid #eee;
+  padding: 10px;
+  color: #666;
+}
+
+.device_item_hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.connected_info {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  padding-bottom: 20px;
+  margin-bottom: env(safe-area-inset-bottom);
+  font-size: 14px;
+  height: 100px;
+  box-shadow: 0px 0px 3px 0px;
+}
+
+.chs_info {
+  position: fixed;
+  bottom: 120px;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  padding-bottom: 20px;
+  margin-bottom: env(safe-area-inset-bottom);
+  font-size: 14px;
+  height: 100px;
+  box-shadow: 0px 0px 3px 0px;
+}
+
+.connected_info .operation, .chs_info .operation {
+  position: absolute;
+  display: inline-block;
+  right: 30px;
+}
+
+.button-scan {
+  width: 30%;
+  margin: 1%;
+  display: inline-block;
+}
+
+view {
+  font-size: 12px;
+}
