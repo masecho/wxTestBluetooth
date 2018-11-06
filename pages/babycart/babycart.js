@@ -3,12 +3,6 @@ const Bluetooth = require("../../utils/bluetooth/bluetooth.js");
 const bleCMD = require("../../utils/bluetooth/bleCMD.js");
 const arrbuffer = require('../../utils/bluetooth/arrbuffer.js');
 const BleConfig = require('../../utils/bluetooth/bleConfig.js');
-let arr = new Uint8Array([0x50, 0x1d, 0x02, 0x00, 0xb6, 0x24]);
-let len = arr.length;
-let res = arr.slice(len-3,len-1);
-console.log(res);
-
-
 Page({
 
   /**
@@ -18,7 +12,8 @@ Page({
     device: null,
     deviceId: null,
     connected: false,
-    total: 8
+    total: 8,
+    tempBuffer:null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -100,7 +95,7 @@ Page({
       }
 
       let res = bleCMD.bleParse(cha.value);
-      console.log(res);
+    
       switch (res.data.cmdType) {
         // 连接验证
         case "connectValidate":
@@ -108,6 +103,12 @@ Page({
             this.setData({
               connected: true
             })
+            if (this.data.tempBuffer){
+              this.bleSendMessage(this.data.tempBuffer);
+              this.setData({
+                tempBuffer:null
+              })
+            }
             wx.showToast({
               title: '验证通过'
             })
@@ -178,16 +179,19 @@ Page({
       characteristicId,
       value: buffer,
       success: (res) => {
-        console.log(res)
+        
       },
       fail: (res) => {
+        _this.setData({
+          tempBuffer: buffer
+        })
         _this.createBLEConnection();
       },
       complete: (res) => {
-        console.log(res)
+       
       }
     }
-    console.log(arrbuffer.ab2U8str(buffer));
+   
     wx.writeBLECharacteristicValue(data);
   }
 })
