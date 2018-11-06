@@ -1,0 +1,12 @@
+<!--pages/babycart/babycart.wxml-->
+<block wx:for='{{total}}' wx:for-item = "item" wx:key="*this">
+  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='queryLockState' data-index = '{{item}}'>查询锁状态{{item}}</button>
+</block>
+
+<view>
+ <button style='width:100%;display:inline-block;font-size:12px;' bindtap='queryLockAllState'>查询所有锁锁死状态{{item}}</button>
+</view>
+
+<block wx:for='{{total}}' wx:for-item = "item" wx:key="*this">
+  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='cmdOpenSingleLock' data-index = '{{item}}'>打开锁{{item}}</button>
+</block>

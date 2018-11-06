@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/babycart/babycart",    
     "pages/device/device",
     "pages/test/test",
     "pages/index/index",

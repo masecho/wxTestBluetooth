@@ -12,6 +12,16 @@ const ab2U8str = (buffer) => {
   return hexArr.join('');
 }
 
+const u8arr2str = (u8arr) =>{ 
+  let result = Array.prototype.map.call(
+    u8arr,
+    function (byteItem) {
+      return ('00' + byteItem.toString(16)).slice(-2)
+    }
+  ) 
+  return result.join('');
+} 
+
 // ArrayBuffer转16进制字符串
 const ab2U16str = (buffer) => {
   if (!buffer || !buffer.byteLength) {
@@ -125,6 +135,7 @@ module.exports = {
   ab2U16arr,
   u16arr2ab,
   u8arr2ab,
+  u8arr2str,
   int2bytes,
   str2ab,
   string2ab,

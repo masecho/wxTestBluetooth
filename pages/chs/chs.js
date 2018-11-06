@@ -2,8 +2,8 @@
 const Bluetooth = require("../../utils/bluetooth/bluetooth.js");
 const ArrBuffer = require("../../utils/bluetooth/arrbuffer.js");
 const CRC16 = require("../../utils/bluetooth/crc16.js");
-const GetCMD = require("../../utils/bluetooth/bluetoothCMD.js")
-const BluetoothParse = require("../../utils/bluetooth/bluetoothParse.js");
+const GetCMD = require("../../utils/bluetooth/bleCMD.js")
+const BleParse = require("../../utils/bluetooth/bleParse.js");
 let App = getApp();
 
 Page({
@@ -94,7 +94,7 @@ Page({
         value: value
       }
       this.setData(data);
-      console.log(BluetoothParse(value));
+      console.log(BleParse(value));
     });
   },
   
@@ -136,7 +136,7 @@ Page({
     let cmd = GetCMD("queryLockState", [0x00]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   // 查询锁状态01
@@ -146,7 +146,7 @@ Page({
     let cmd = GetCMD("queryLockState",[0x01]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   // 查询锁状态02
@@ -156,7 +156,7 @@ Page({
     let cmd = GetCMD("queryLockState", [0x02]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   // 查询锁状态03
@@ -166,7 +166,7 @@ Page({
     let cmd = GetCMD("queryLockState", [0x03]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //查询所有锁锁死状态，回复01代表激活正常，00代表锁死（默认01）
@@ -176,7 +176,7 @@ Page({
     let cmd = GetCMD("queryAllLockState");
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //查询电池电量
@@ -186,7 +186,7 @@ Page({
     let cmd = GetCMD("queryBatteryState");
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //锁死所有锁
@@ -196,7 +196,7 @@ Page({
     let cmd = GetCMD("cmdLockAll",[0x00]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //打开所有所
@@ -206,7 +206,7 @@ Page({
     let cmd = GetCMD("cmdLockAll", [0x01]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //打开一个锁（请求借车）请求00
@@ -216,7 +216,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x00]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //打开一个锁（请求借车）请求01
@@ -226,7 +226,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x01]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //打开一个锁（请求借车）请求02
@@ -236,7 +236,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x02]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   cmdOpenSingleLock3(e) {
@@ -245,7 +245,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x03]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   cmdOpenSingleLock4(e) {
@@ -254,7 +254,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x04]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   cmdOpenSingleLock5(e) {
@@ -263,7 +263,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x05]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   cmdOpenSingleLock6(e) {
@@ -272,7 +272,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x06]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   cmdOpenSingleLock7(e) {
@@ -281,7 +281,7 @@ Page({
     let cmd = GetCMD("cmdOpenSingleLock", [0x07]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约借车00
@@ -291,7 +291,7 @@ Page({
     let cmd = GetCMD("cmdReserveCart", [0x00]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约借车01
@@ -301,7 +301,7 @@ Page({
     let cmd = GetCMD("cmdReserveCart", [0x01]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约借车02
@@ -311,7 +311,7 @@ Page({
     let cmd = GetCMD("cmdReserveCart", [0x02]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
 
@@ -323,7 +323,7 @@ Page({
     let cmd = GetCMD("cmdCancelReserveCart", [0x00]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约还车00
@@ -333,7 +333,7 @@ Page({
     let cmd = GetCMD("cmdReserveBack", [0x00, 0x72, 0x7F]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约还车01
@@ -343,7 +343,7 @@ Page({
     let cmd = GetCMD("cmdReserveBack", [0x01, 0x53, 0x9e]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约还车02
@@ -353,7 +353,7 @@ Page({
     let cmd = GetCMD("cmdReserveBack", [0x02, 0x41, 0x22]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //预约还车03
@@ -363,7 +363,7 @@ Page({
     let cmd = GetCMD("cmdReserveBack", [0x03, 0x4c, 0xd5]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
 
@@ -374,7 +374,7 @@ Page({
     let cmd = GetCMD("cmdCancelReserveBack", [0x02, 0x41, 0x22]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
 
@@ -387,7 +387,7 @@ Page({
     let cmd = GetCMD("cmdCancelReserveBack",[0x03, 0x41, 0x22]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   }, 
    //手动还车00
@@ -397,7 +397,7 @@ Page({
     let cmd = GetCMD("cmdHandleLockBack", [0x72, 0x7f]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //手动还车01
@@ -407,7 +407,7 @@ Page({
     let cmd = GetCMD("cmdHandleLockBack", [0x53, 0x9e]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //手动还车02
@@ -417,7 +417,7 @@ Page({
     let cmd = GetCMD("cmdHandleLockBack", [0x41, 0x22]);
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
  
@@ -428,7 +428,7 @@ Page({
     let cmd = GetCMD("GPSLocation");
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //获取主锁Id
@@ -438,7 +438,7 @@ Page({
     let cmd = GetCMD("queryModuleId");
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   //查询主锁运行模式
@@ -448,7 +448,7 @@ Page({
     let cmd = GetCMD("queryModuleRunMode");
     let arr = new Uint8Array(cmd);
     let bufArr = new Uint8Array(arr.buffer);
-    let buffer = CRC16.concatCRC16(bufArr, true);
+    let buffer = CRC16.concatCRC16(bufArr);
     this.writeBLECharacteristicValue(uuid, buffer);
   },
   writeBLECharacteristicValue(uuid, buffer) {  

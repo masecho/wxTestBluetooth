@@ -1,16 +1,11 @@
 const Bluetooth = require("../../utils/bluetooth/bluetooth.js");
 const CRC16 = require("../../utils/bluetooth/crc16_ccitt.js");
-const GetCMD = require("../../utils/bluetooth/bluetoothCMD.js");
+const GetCMD = require("../../utils/bluetooth/bleCMD.js");
 const md5 = require("../../miniprogram_npm/js-md5/index.js");
 const arrbuffer = require('../../utils/bluetooth/arrbuffer.js')
 
 let App = getApp();
-let arr = new Uint8Array([0x11, 0x22, 0X10, 0X15, 0X04, 0X00, 0X00, 0X19,0xdc]);
-let arr2 = md5.array(arr).slice(0, 4);
 
-// console.log(CRC16(arr).toString(16));
-// console.log(GetCMD('connectValidate'));
-// console.log(arrbuffer.ab2U8str(new Unit8Array(arr2).buffer));
 
 
 Page({

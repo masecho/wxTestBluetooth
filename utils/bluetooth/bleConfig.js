@@ -1,4 +1,11 @@
+const UUID = {  
+  serviceId:'0000FFE0-0000-1000-8000-00805F9B34FB',
+  characteristicId:'0000FFE1-0000-1000-8000-00805F9B34FB'
+};
+
 const password = [0x11, 0x22];
+
+const lockState = ['isClosed', 'isPreborrow', 'isOpen','isPreback'];
 
 const CMD_LIST = {
   // 查询主锁Id
@@ -61,6 +68,8 @@ const PARSE_LIST = {
   GPSLocation: [0x10, 0x18]
 }
 module.exports = {
+  UUID,
+  lockState,
   password,
   CMD_LIST,
   PARSE_LIST
