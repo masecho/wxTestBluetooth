@@ -13,7 +13,7 @@ Page({
     deviceId: null,
     connected: false,
     total: 8,
-    tempBuffer:null
+    tempBuffer: null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -31,7 +31,7 @@ Page({
         return Bluetooth.startBluetoothDevicesDiscovery([BleConfig.UUID.serviceId]);
       })
       .catch((res) => {
-        console.log(res);
+
       })
       .then(() => {
         wx.onBluetoothDeviceFound((res) => {
@@ -95,7 +95,7 @@ Page({
       }
 
       let res = bleCMD.bleParse(cha.value);
-    
+
       switch (res.data.cmdType) {
         // 连接验证
         case "connectValidate":
@@ -103,10 +103,10 @@ Page({
             this.setData({
               connected: true
             })
-            if (this.data.tempBuffer){
+            if (this.data.tempBuffer) {
               this.bleSendMessage(this.data.tempBuffer);
               this.setData({
-                tempBuffer:null
+                tempBuffer: null
               })
             }
             wx.showToast({
@@ -114,32 +114,31 @@ Page({
             })
           }
           break;
-        // 查询锁状态
+          // 查询锁状态
         case "queryLockState":
-          if (res.data.status == 0) {            
+          if (res.data.status == 0) {
             wx.showToast({
               title: res.data.state
             })
           }
           break;
 
-        // 查询所有锁状态
+          // 查询所有锁状态
         case "queryAllLockState":
-          if (res.data.status == 0) {            
+          if (res.data.status == 0) {
             wx.showToast({
-              title: res.data.isNormal?'正常':"锁死"
+              title: res.data.isNormal ? '正常' : "锁死"
             })
           }
-          break;    
+          break;
 
-        // 打开一个锁
+          // 打开一个锁
         case "cmdOpenSingleLock":
-          // if (res.data.status == 0) {
-          //   wx.showToast({
-          //     title: res.data.isNormal ? '正常' : "锁死"
-          //   })
-          // }
-          break;         
+          console.log(res)
+          wx.showToast({
+            title: res.data.code + (res.data.RFID || '')
+          })
+          break;
       }
     });
   },
@@ -156,15 +155,15 @@ Page({
   },
 
   // 查询所有锁状态
-  queryLockAllState(){
+  queryLockAllState() {
     let buffer = bleCMD.getBleTotalCMD("queryAllLockState");
     this.bleSendMessage(buffer);
   },
 
   //打开一个锁
-  cmdOpenSingleLock(e){
+  cmdOpenSingleLock(e) {
     let num = parseInt(e.currentTarget.dataset.index) || 0;
-    let buffer = bleCMD.getBleTotalCMD("cmdOpenSingleLock",[num]);
+    let buffer = bleCMD.getBleTotalCMD("cmdOpenSingleLock", [num]);
     this.bleSendMessage(buffer);
   },
 
@@ -179,7 +178,7 @@ Page({
       characteristicId,
       value: buffer,
       success: (res) => {
-        
+
       },
       fail: (res) => {
         _this.setData({
@@ -188,10 +187,10 @@ Page({
         _this.createBLEConnection();
       },
       complete: (res) => {
-       
+
       }
     }
-   
+
     wx.writeBLECharacteristicValue(data);
   }
 })

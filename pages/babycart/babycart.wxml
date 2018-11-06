@@ -1,6 +1,6 @@
 <!--pages/babycart/babycart.wxml-->
 <block wx:for='{{total}}' wx:for-item = "item" wx:key="*this">
-  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='queryLockState' data-index = '{{item}}'>查询锁状态{{item}}</button>
+  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='queryLockState' data-index = '{{item}}'>查询锁状态{{item+1}}</button>
 </block>
 
 <view>
@@ -8,5 +8,5 @@
 </view>
 
 <block wx:for='{{total}}' wx:for-item = "item" wx:key="*this">
-  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='cmdOpenSingleLock' data-index = '{{item}}'>打开锁{{item}}</button>
+  <button style='width:30%;display:inline-block;font-size:12px;margin-right:3%' bindtap='cmdOpenSingleLock' data-index = '{{item}}'>打开锁{{item+1}}</button>
 </block>

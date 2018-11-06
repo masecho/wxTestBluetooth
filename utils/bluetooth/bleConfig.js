@@ -5,7 +5,8 @@ const UUID = {
 
 const password = [0x11, 0x22];
 
-const lockState = ['isClosed', 'isPreborrow', 'isOpen','isPreback'];
+const lockState = ['isClosed', 'isPreborrow', 'isOpen', 'isPreback'];
+const errCode = ['success', 'fail', 'isOpen', 'lenErr', 'crcErr','isPreback','timeout','111','operErr'];
 
 const CMD_LIST = {
   // 查询主锁Id
@@ -69,6 +70,7 @@ const PARSE_LIST = {
 }
 module.exports = {
   UUID,
+  errCode,
   lockState,
   password,
   CMD_LIST,

@@ -12,7 +12,7 @@ const getResponseCRC16 = (u8arr) => {
 }
 const getResponseMD5 = (u8arr, isConnectValidate) => {
   let len = u8arr.length;
-  let arr = u8arr.slice(len - 7, len - 3);
+  let arr = u8arr.slice(len - 6, len - 2);
   let result = isConnectValidate ? (new Uint8Array()) : arr;
   return result;
 }
@@ -45,31 +45,30 @@ const parseData = (cmdType, res) => {
     u8: res.slice(1),
     status: res[1]
   }
-  let result = {};
+  
   switch (cmdType) {
-    case "connectValidate":
-      result = data;
+    case "connectValidate":      
       break;
 
-    case "queryAllLockState":
-      result = data;
-      result.state = res[2];
-      result.isNormal = (res[2] == 1);
+    case "queryAllLockState":      
+      data.state = res[2];
+      data.isNormal = (res[2] == 1);
       break;
 
-    case "queryLockState":
-      result = data;
+    case "queryLockState":    
       let stateNum = parseInt(res[2]);
-      result.state = BleConfig.lockState[stateNum];
-      result.RFID = arrbuffer.u8arr2str(res.slice(3, 5));
+      data.state = BleConfig.lockState[stateNum];
+      data.RFID = arrbuffer.u8arr2str(res.slice(3, 5));
       break;
 
-    case "cmdOpenSingleLock":
-      result = data;
-      result.RFID = arrbuffer.u8arr2str(res.slice(2, 4));
+    case "cmdOpenSingleLock":     
+      data.code = BleConfig.errCode[status];
+      if (status == 0){
+        data.RFID = arrbuffer.u8arr2str(res.slice(2, 4));       
+      }     
       break;
   }
-  return result;
+  return data;
 }
 
 const parseResponse = (arr) => {
